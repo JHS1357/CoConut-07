@@ -24,7 +24,7 @@ public class Weapon : MonoBehaviour
             StopCoroutine("Swing");
             StartCoroutine("Swing");
         }
-        if (type == Type.Hammer)
+        else if(type == Type.Hammer)
         {
             StopCoroutine("Stun");
             StartCoroutine("Stun");
@@ -32,6 +32,10 @@ public class Weapon : MonoBehaviour
         else if (type == Type.Range)
         {
             StartCoroutine("Shot");
+        }
+        else if (type == Type.Bomb)
+        {
+            StartCoroutine("Throw");
         }
     }
 
@@ -70,7 +74,7 @@ public class Weapon : MonoBehaviour
         // #1.ÃÑ¾Ë ¹ß»ç
         GameObject intantBullet = Instantiate(bullet, bulletPos.position, bulletPos.rotation);
         Rigidbody bulletRigid = intantBullet.GetComponent<Rigidbody>();
-        bulletRigid.velocity = bulletPos.forward * 20;
+        bulletRigid.velocity = bulletPos.forward * 15;
 
         yield return null;
 
@@ -80,6 +84,21 @@ public class Weapon : MonoBehaviour
         Vector3 caseVec = bulletCasePos.forward * Random.Range(-3, -2) + Vector3.up * Random.Range(2, 3);
         caseRigid.AddForce(caseVec, ForceMode.Impulse);
         caseRigid.AddTorque(Vector3.up * 10, ForceMode.Impulse);
+    }
+
+    IEnumerator Throw()
+    {
+        // # ÆøÅº ´øÁö±â
+        GameObject intantBullet = Instantiate(bullet, bulletPos.position, bulletPos.rotation);
+        Rigidbody bulletRigid = intantBullet.GetComponent<Rigidbody>();
+        //bulletRigid.velocity = bulletPos.forward * 5;
+        Vector3 caseVec = bulletCasePos.forward * Random.Range(8,10) + Vector3.up * Random.Range(3, 5);
+        bulletRigid.AddForce(caseVec, ForceMode.Impulse);
+        bulletRigid.AddTorque(Vector3.back * 30, ForceMode.Impulse);
+
+        bulletRigid.AddTorque(Vector3.up * 30, ForceMode.Impulse);
+
+        yield return null;
     }
 
 }

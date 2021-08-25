@@ -5,7 +5,10 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     public float rot_speed = 10.0f;
+    Rigidbody rigid;
+    BoxCollider boxCollider;
     Material mat;
+
 
     private Transform target;
     private int wavepointIndex = 0;
@@ -16,9 +19,9 @@ public class Enemy : MonoBehaviour
     [Header("State")]
     public int HP = 100;
     public float move_speed = 3.0f;
-
-
     float init_move_speed;
+
+
     private void OnEnable()
     {
         HP = DataManager.instance.enemyHP[GameManager.instance.nCurWave];
@@ -27,6 +30,10 @@ public class Enemy : MonoBehaviour
 
     private void Start()
     {
+        rigid = GetComponent<Rigidbody>();
+        boxCollider = GetComponent<BoxCollider>();
+        mat = GetComponentInChildren<MeshRenderer>().material;
+
         init_move_speed = move_speed;
 
         this.transform.position = GameObject.Find("StartPos").transform.position;
@@ -154,13 +161,53 @@ public class Enemy : MonoBehaviour
     }
     // END
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Melee")
+        {
+            HP -= 100;
+            Vector3 reactVec = transform.position - other.transform.position;
+                StartCoroutine(OnDamege(reactVec, false));
+        }
+        else if (other.tag == "Bullet")
+        {
+            HP -= 100;
+            Vector3 reactVec = transform.position - other.transform.position;
+                StartCoroutine(OnDamege(reactVec, false));
+        }
+    }
+    public void HitByRocket(Vector3 exlopsoinPos)
+    {
+        HP -= 200;
+        Vector3 reactVec = transform.position - exlopsoinPos;
+        StartCoroutine(OnDamege(reactVec, true));
+    }
+    IEnumerator OnDamege(Vector3 reactVec, bool isRocket)
+    {
+        mat.color = Color.red;
+        yield return new WaitForSeconds(0.1f);
+        if (HP > 0)
+        {
+            mat.color = Color.white;
+        }
+        else
+        {
+            mat.color = Color.gray;  
+            gameObject.layer = 14;
+            rigid.freezeRotation = false;
+            reactVec = reactVec.normalized;
+            reactVec += Vector3.up;
+            rigid.AddForce(reactVec * 5, ForceMode.Impulse);
+            rigid.AddTorque(reactVec * 5, ForceMode.Impulse);
+            GetDamage(0);
+        }
 
+    }
 
     IEnumerator EnemyDie()
     {
-
         myAnimator.SetTrigger("Die");
-                                                                                //다이라는 애니메이션이                                           //끝나고 나면
+        //다이라는 애니메이션이                                           //끝나고 나면
         yield return new WaitUntil(() => (myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Die") && (myAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.99f)));
 
         //죽는 모션 이후에 변경할 것들
@@ -168,33 +215,5 @@ public class Enemy : MonoBehaviour
         this.gameObject.SetActive(false);
 
         yield return null;
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.tag == "Melee")
-        {
-            if(this.HP >0)
-                GetDamage(other.GetComponent<Weapon>().damage);
-        }
-        else if (other.tag == "Bullet")
-        {
-            if (this.HP > 0)
-                GetDamage(other.GetComponent<Bullet>().damage);
-            Vector3 reactVec = transform.position - other.transform.position;
-            Destroy(other.gameObject);
-            StartCoroutine(OnDamege());
-        }
-
-        IEnumerator OnDamege()
-        {
-            mat.color = Color.red;
-            yield return new WaitForSeconds(0.1f);
-
-            if (this.HP > 0)
-            {
-                mat.color = Color.white;
-            }
-        }
     }
 }

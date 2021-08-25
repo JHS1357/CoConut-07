@@ -107,7 +107,7 @@ public class PlayerController : MonoBehaviour
     {
         if (hasGrenades == 0)
             return;
-
+        /*
         if (gDown)
         {
             Vector3 nextVec = Vector3.forward;
@@ -122,6 +122,7 @@ public class PlayerController : MonoBehaviour
             hasGrenades--;
             grenades[hasGrenades].SetActive(false);
         }
+        */
     }
     public void Attack()
     {
@@ -150,7 +151,6 @@ public class PlayerController : MonoBehaviour
                 break;
         }
 
-        SoundManager.instance.SFXPlay("Attack", clip);
 
     }
     public void Swap()
