@@ -135,9 +135,11 @@ public class GameManager : MonoBehaviour
         SummonEnemy(nCurWave);
 
 
-
         //게임 종료
+        yield return new WaitUntil(() => (nMonsterCnt == nUsedMonsterCnt));
+        if (nMonsterCnt == nUsedMonsterCnt) CoconutLife.instance.GameClear();
+
+
         yield return null;
-        
     }
 }

@@ -17,11 +17,13 @@ public class VolumeCtrl : MonoBehaviour
 
     private void Start()
     {
-        bgmVolume = SoundManager.instance.BGMVolume; //PlayerPrefs.GetFloat("bgmVolume", 1.0f);
+        bgmVolume = PlayerPrefs.GetFloat("bgmVolume", 1.0f); 
+        //SoundManager.instance.BGMVolume = bgmVolume; 
         bgmSlider.value = bgmVolume;
         bgm.volume = bgmSlider.value;
 
-        effVolume = SoundManager.instance.EFFVolume; //PlayerPrefs.GetFloat("effVolume", 1.0f);
+        effVolume = PlayerPrefs.GetFloat("effVolume", 1.0f);
+        //SoundManager.instance.EFFVolume = effVolume;
         effSlider.value = effVolume;
         eff.volume = effSlider.value;
     }
@@ -37,7 +39,8 @@ public class VolumeCtrl : MonoBehaviour
         bgm.volume = bgmSlider.value;
 
         bgmVolume = bgmSlider.value;
-        //PlayerPrefs.SetFloat("bgmVolume", bgmVolume);
+
+        PlayerPrefs.SetFloat("bgmVolume", bgmVolume);
 
         SoundManager.instance.BGMVolume = bgmVolume;
     }
@@ -47,7 +50,8 @@ public class VolumeCtrl : MonoBehaviour
         eff.volume = effSlider.value;
 
         effVolume = effSlider.value;
-        //PlayerPrefs.SetFloat("effVolume", effVolume);
+       
+        PlayerPrefs.SetFloat("effVolume", effVolume);
 
         SoundManager.instance.EFFVolume = effVolume;
     }

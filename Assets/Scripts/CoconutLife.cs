@@ -12,7 +12,7 @@ public class CoconutLife : MonoBehaviour
     }
 
     public int life = 3;
-    
+
     public GameObject[] cocos;
     public AudioClip clip;
 
@@ -27,7 +27,7 @@ public class CoconutLife : MonoBehaviour
     {
         cocoCam.gameObject.SetActive(true);
         yield return new WaitForSeconds(0.5f);
-     
+
         SoundManager.instance.SFXPlay("CoconutFall", clip);
         cocos[--life].SetActive(false);
         yield return new WaitForSeconds(1.0f);
@@ -40,5 +40,10 @@ public class CoconutLife : MonoBehaviour
     private void GameOver()
     {
         SceneManager.LoadScene("GameOverScene");
+    }
+
+    public void GameClear()
+    {
+        SceneManager.LoadScene("ClearScene");
     }
 }
