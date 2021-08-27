@@ -21,13 +21,11 @@ public class Weapon : MonoBehaviour
     {
         if(type == Type.Melee)
         {
-            StopCoroutine("Swing");
-            StartCoroutine("Swing");
+            StartCoroutine("Shot");
         }
         else if(type == Type.Hammer)
         {
-            StopCoroutine("Stun");
-            StartCoroutine("Stun");
+            StartCoroutine("Shot");
         }
         else if (type == Type.Range)
         {
@@ -71,6 +69,14 @@ public class Weapon : MonoBehaviour
 
     IEnumerator Shot()
     {
+        if (type == Type.Melee)
+        {
+            yield return new WaitForSeconds(0.85f);
+        }
+        else if (type == Type.Hammer)
+        {
+            yield return new WaitForSeconds(1f);
+        }
         // #1.ÃÑ¾Ë ¹ß»ç
         GameObject intantBullet = Instantiate(bullet, bulletPos.position, bulletPos.rotation);
         Rigidbody bulletRigid = intantBullet.GetComponent<Rigidbody>();

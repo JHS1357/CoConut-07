@@ -65,6 +65,7 @@ public class Enemy : MonoBehaviour
         {
             GetNextWayPoint();
         }
+
     }
 
     void GetNextWayPoint()
@@ -109,9 +110,9 @@ public class Enemy : MonoBehaviour
     // TO-DO 슬로우 등 상태이상 적용 필요
     // 일단은 제가 혼자 실험하면서 구현했던 코드를 임시로 가져옵니다.
     // START
-    bool is_slow = false;
+    public bool is_slow = false;
     float slow_power;
-    bool is_stun = false;
+    public bool is_stun = false;
     public void ApplyStatus(int status_code, float duration, float power)
     {
         switch (status_code)
@@ -171,7 +172,7 @@ public class Enemy : MonoBehaviour
         }
         else if (other.tag == "Bullet")
         {
-            HP -= 100;
+            HP -= 50;
             Vector3 reactVec = transform.position - other.transform.position;
                 StartCoroutine(OnDamege(reactVec, false));
         }
