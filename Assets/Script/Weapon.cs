@@ -98,7 +98,7 @@ public class Weapon : MonoBehaviour
         GameObject intantBullet = Instantiate(bullet, bulletPos.position, bulletPos.rotation);
         Rigidbody bulletRigid = intantBullet.GetComponent<Rigidbody>();
         //bulletRigid.velocity = bulletPos.forward * 5;
-        Vector3 caseVec = bulletCasePos.forward * Random.Range(8,10) + Vector3.up * Random.Range(3, 5);
+        Vector3 caseVec = bulletCasePos.forward * Random.Range(8,9) + Vector3.up * Random.Range(4, 5);
         bulletRigid.AddForce(caseVec, ForceMode.Impulse);
         bulletRigid.AddTorque(Vector3.back * 30, ForceMode.Impulse);
 

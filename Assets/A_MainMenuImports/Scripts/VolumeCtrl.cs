@@ -42,7 +42,7 @@ public class VolumeCtrl : MonoBehaviour
 
         PlayerPrefs.SetFloat("bgmVolume", bgmVolume);
 
-        SoundManager.instance.BGMVolume = bgmVolume;
+
     }
 
     public void EffectControl()
@@ -53,6 +53,5 @@ public class VolumeCtrl : MonoBehaviour
        
         PlayerPrefs.SetFloat("effVolume", effVolume);
 
-        SoundManager.instance.EFFVolume = effVolume;
     }
 }

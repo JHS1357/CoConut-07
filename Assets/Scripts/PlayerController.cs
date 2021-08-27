@@ -12,7 +12,10 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed = 4.0f;
     public float SmoothMoveSpeed = 5.0f;
 
-    public AudioClip clip;
+    public AudioClip clip1;
+    public AudioClip clip2;
+    public AudioClip clip3;
+    public AudioClip clip4;
 
     public GameObject[] weapons;
     public bool[] hasWeapons;
@@ -131,21 +134,26 @@ public class PlayerController : MonoBehaviour
         switch (equipWeapon.type)
         {
             case Weapon.Type.Melee:
+                SoundManager.instance.SFXPlay("Attack", clip1);
                 anim.SetTrigger("doSwing");
                 Debug.Log("doSwing");
                 break;
 
-            case Weapon.Type.Range:
-                anim.SetTrigger("doShot");
-                Debug.Log("doShot");
-                break;
-
             case Weapon.Type.Hammer:
+                SoundManager.instance.SFXPlay("stun", clip2);
                 anim.SetTrigger("doStun");
                 Debug.Log("doStun");
                 break;
 
+            case Weapon.Type.Range:
+                SoundManager.instance.SFXPlay("shot", clip3);
+                anim.SetTrigger("doShot");
+                Debug.Log("doShot");
+                break;
+
+
             case Weapon.Type.Bomb:
+                SoundManager.instance.SFXPlay("bomb", clip4);
                 anim.SetTrigger("doThrow");
                 Debug.Log("doThrow");
                 break;
